@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Crud_Alumnos.Models.Alumno>
+
+@{
+    ViewBag.Title = "Consulta Alumnos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Consulta</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo Alumno", "Agregar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre Completo
+        </th>
+        <th>
+            Edad
+        </th>
+        <th>
+            Sexo
+        </th>
+        <th>
+            Ciudad
+        </th>
+        <th>
+            Fecha Alta
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.FechaAlta)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Apellidos)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Sexo)*@
+                @{ if (item.Sexo == "M")
+                    {
+                        <span>Masculino</span>
+                    }
+                    else
+                    {
+                        <span>Femenino</span>
+                    }
+                }
+            </td>
+            <td>
+                @*@item.Ciudad.Nombre*@   
+                @Crud_Alumnos.Controllers.AlumnoController.NombreCiudad(item.CiudadId)
+            </td>
+            <td>
+                @*@item.FechaAlta.Value.ToShortDateString();*@
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.AlumnoId }) |
+                @Html.ActionLink("Detalles", "Detalles", new { id = item.AlumnoId }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.AlumnoId }, new {@class= "aElimina"})
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        $(".aElimina").click(function (event) {
+            if (!confirm('Estas seguto de elimar este registro?')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+    }
