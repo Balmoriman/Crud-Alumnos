@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Crud_Alumnos.Models.Ciudad>
 
-    <select class="form-control" id="CiudadId" name="CiudadId">
+    <select class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' id="CiudadId" name="CiudadId">
         @foreach (var item in Model)
         {
            <option value="@item.CiudadId" >@item.Nombre</option>
